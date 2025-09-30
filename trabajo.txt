@@ -1,0 +1,96 @@
+Necesito crear un sistema intuitivo de busqueda y gestion de equipos
+para eso tengo una hoja de calculo con el levantamiento completo
+ahora lo que deseo es implementar tarjetas con la informacion de las hojas
+y un apartado donde se puede almacenar sus especificaciones y trabajos relizados en tal equipos
+
+para esto vamos a hacerlo vamos a organizar como deberia almacenarse la informaccion
+
+[
+  {
+    "id": "EQ-0MN",
+    "informacion": {
+      "modelo": "Dell Latitude 5420",
+      "numero_de_serie": "DL5420-1234",
+      "operador": "Juan Pérez",
+      "ubicacion": "Oficina Principal"
+    },
+    "especificaciones": {
+      "almacenamiento": [
+        {"tipo": "SSD", "cantidad": "512GB"},
+        {"tipo": "HDD", "cantidad": "1TB"}
+      ],
+      "procesador": "Intel i7-1185G7",
+      "memoria": [
+        {"tipo": "DDR4", "cantidad": "16GB"}
+      ],
+      "sistema": "Windows 11 Pro"
+    },
+    "intervenciones": {
+      "1": {"fecha": "2025-07-15", "razon": "Cambio de disco SSD"},
+      "2": {"fecha": "2025-09-02", "razon": "Mantenimiento preventivo"}
+    }
+  },
+  {
+    "id": "EQ-0MS",
+    "informacion": {
+      "modelo": "HP EliteBook 850 G8",
+      "numero_de_serie": "HP850-5678",
+      "operador": "María López",
+      "ubicacion": "Sucursal Norte"
+    },
+    "especificaciones": {
+      "almacenamiento": [
+        {"tipo": "SSD", "cantidad": "1TB"}
+      ],
+      "procesador": "Intel i5-1145G7",
+      "memoria": [
+        {"tipo": "DDR4", "cantidad": "8GB"},
+        {"tipo": "DDR4", "cantidad": "8GB"}
+      ],
+      "sistema": "Windows 10 Pro"
+    },
+    "intervenciones": {
+      "1": {"fecha": "2025-08-10", "razon": "Actualización de sistema operativo"},
+      "2": {"fecha": "2025-09-20", "razon": "Reemplazo de batería"}
+    }
+  }
+]
+
+este sera el formato en el que lo llevaremos los identificadores para los ID se calcula asi
+
+| Departamento                             | Código |
+| ---------------------------------------- | ------ |
+| Boaco                                    | BO     |
+| Carazo                                   | CA     |
+| Chinandega                               | CH     |
+| Chontales                                | CN     |
+| Estelí                                   | ES     |
+| Granada                                  | GR     |
+| Jinotega                                 | JI     |
+| León                                     | LE     |
+| Madriz                                   | MA     |
+| Managua                                  | MN     |
+| Masaya                                   | MS     |
+| Matagalpa                                | MT     |
+| Nueva Segovia                            | NS     |
+| Río San Juan                             | SJ     |
+| Rivas                                    | RI     |
+| Región Autónoma de la Costa Caribe Norte | RACN   |
+| Región Autónoma de la Costa Caribe Sur   | RACS   |
+
+a estos dodigos se le agrega un salt aleatorio
+
+n1 = número de departamentos 
+
+n2 = número de opciones por dígito del salt
+
+k = longitud del salt = 6
+
+La fórmula:
+
+C=n1​×n2k
+
+con aproximadamente 17 millones de combinaciones distintas posibles
+
+lo suficiente para toda la existencia de la empresa
+
