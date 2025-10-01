@@ -1,8 +1,8 @@
 from template import Template, Ram, Almacenamiento
 from pprint import pprint
-from json_handler import *
+from json_handler import Json
 
-json_padre= crear_json("data.json",[])
+json_padre= Json('','data')
 
 prueba = Template('informatica','Raul Emmanuel Aguilar','lenovo G50','80QQ','123456','21383718','Chontales')
 prueba.ingresar_especificaciones('intel CoreI5','Archcraft',[Ram('DDR4','8GB')],[Almacenamiento('HHD','120GB')])
@@ -10,10 +10,12 @@ prueba1 = Template('informatica','Leonardo Perez Alvarado','lenovo G50','80QQ','
 prueba1.ingresar_especificaciones('intel CoreI5','Archcraft',[Ram('DDR4','8GB')],[Almacenamiento('HHD','120GB')])
 
 
-agregar_json('data.json',prueba.json)
+json_padre.agregar_diccionario(prueba.json)
 
-agregar_json('data.json',prueba1.json)
+json_padre.agregar_diccionario(prueba1.json)
 
-json_back = leer_json('data.json')
+json_back= Json('',"Back_up")
 
-pprint(json_back[1])
+json_back.clonar(json_padre)
+
+pprint(json_back.leer()[0])
