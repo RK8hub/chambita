@@ -1,5 +1,4 @@
-from dataclasses import dataclass, field, asdict
-from pprint import pprint
+from dataclasses import dataclass, field, asdict, fields
 import secrets
 
 @dataclass
@@ -7,8 +6,10 @@ class Componente:
     tipo: str
     capacidad: str
     def __post_init__(self):
-      if self.tipo == '' or self.capacidad =='':
-        raise ValueError('varible vacia')
+      for f in fields(self):  # recorre todos los atributos del dataclass
+            valor = getattr(self, f.name)
+            if isinstance(valor, str) and valor.strip() == "":
+                raise ValueError(f"El campo '{f.name}' está vacío")
       
 class Almacenamiento(Componente):pass
     
@@ -31,22 +32,26 @@ class Template:
     "CARAZO": "CA",
     "CHINANDEGA": "CH",
     "CHONTALES": "CN",
-    "ESTELÍ": "ES",
+    "ESTELI": "ES",
     "GRANADA": "GR",
     "JINOTEGA": "JI",
-    "LEÓN": "LE",
+    "LEON": "LE",
     "MADRIZ": "MA",
     "MANAGUA": "MN",
     "MASAYA": "MS",
     "MATAGALPA": "MT",
     "NUEVA SEGOVIA": "NS",
-    "RÍO SAN JUAN": "SJ",
+    "RIO SAN JUAN": "SJ",
     "RIVAS": "RI",
-    "REGIÓN AUTÓNOMA DE LA COSTA CARIBE NORTE": "RACN",
-    "REGIÓN AUTÓNOMA DE LA COSTA CARIBE SUR": "RACS"
+    "REGION AUTONOMA DE LA COSTA CARIBE NORTE": "RACN",
+    "REGION AUTONOMA DE LA COSTA CARIBE SUR": "RACS"
     }
     
     def __post_init__(self):
+      for f in fields(self):  # recorre todos los atributos del dataclass
+            valor = getattr(self, f.name)
+            if isinstance(valor, str) and valor.strip() == "":
+                raise ValueError(f"El campo '{f.name}' está vacío")
       self.departamento = self.departamento.upper()
       self.ID = self.determinar_ID()
       self.json = {
@@ -62,6 +67,7 @@ class Template:
             },
           
             }
+      self.json["intervenciones"] = {}
     
     def determinar_ID(self):
       if self.ID  == None:
@@ -70,42 +76,21 @@ class Template:
           return constructo
         
     def ingresar_especificaciones(self,procesador: str,sistema_operativo: str,ram: list,almacenamiento: list,):
+      for f in fields(self):  # recorre todos los atributos del dataclass
+            valor = getattr(self, f.name)
+            if isinstance(valor, str) and valor.strip() == "":
+                raise ValueError(f"El campo '{f.name}' está vacío")
       self.json["especificaciones"] = {
         
         "procesador": f'{procesador}',
         "sistema_operativo": f'{sistema_operativo}',
         "ram": [asdict(r) for r in ram],
         "almacenamiento": [asdict(a) for a in almacenamiento]
-        
-        
-      }
-      
-    
-Ejemplo = Template("Datos Y Noc","Franklin Perez",'ideapad 100-151BQ','80QQ','PFOESUE8','PF9XB5B29005','Managua')
-Ejemplo.ingresar_especificaciones('intel core I5','Windows vista',[Ram('DDR4L','8GB')],[Almacenamiento("HDD","450GB")])
-pprint(Ejemplo.json["especificaciones"])
 
-datos={
-    "id": "EQ-0MN",
-    "informacion": {
-      "modelo": "Dell Latitude 5420",
-      "numero_de_serie": "DL5420-1234",
-      "operador": "Juan Pérez",
-      "ubicacion": "Oficina Principal"
-    },
-    "especificaciones": {
-      "almacenamiento": [
-        {"tipo": "SSD", "cantidad": "512GB"},
-        {"tipo": "HDD", "cantidad": "1TB"}
-      ],
-      "procesador": "Intel i7-1185G7",
-      "memoria": [
-        {"tipo": "DDR4", "cantidad": "16GB"}
-      ],
-      "sistema": "Windows 11 Pro"
-    },
-    "intervenciones": {
-      "1": {"fecha": "2025-07-15", "razon": "Cambio de disco SSD"},
-      "2": {"fecha": "2025-09-02", "razon": "Mantenimiento preventivo"}
-    }
-}
+      }
+    def ingresar_intervencion(self,fecha:str, razon: str):
+      for f in fields(self):  # recorre todos los atributos del dataclass
+            valor = getattr(self, f.name)
+            if isinstance(valor, str) and valor.strip() == "":
+                raise ValueError(f"El campo '{f.name}' está vacío")
+      self.json["intervenciones"][str(len(self.json["intervenciones"]) +1)] = {"fecha": fecha, "razon": razon}
