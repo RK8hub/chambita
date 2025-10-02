@@ -1,21 +1,19 @@
+from excel_manage import inyectar
 from template import Template, Ram, Almacenamiento
 from pprint import pprint
 from json_handler import Json
+import baki
 
-json_padre= Json('','data')
+# principal
+data = Json('data/','database')
+objt_list = []
+data_list = inyectar()
 
-prueba = Template('informatica','Raul Emmanuel Aguilar','lenovo G50','80QQ','123456','21383718','Chontales')
-prueba.ingresar_especificaciones('intel CoreI5','Archcraft',[Ram('DDR4','8GB')],[Almacenamiento('HHD','120GB')])
-prueba1 = Template('informatica','Leonardo Perez Alvarado','lenovo G50','80QQ','123456','21383718','managua')
-prueba1.ingresar_especificaciones('intel CoreI5','Archcraft',[Ram('DDR4','8GB')],[Almacenamiento('HHD','120GB')])
+#recorrer
+for i in data_list:
+    objt_list.append(Template(*i,'managua'))
 
-
-json_padre.agregar_diccionario(prueba.json)
-
-json_padre.agregar_diccionario(prueba1.json)
-
-json_back= Json('',"Back_up")
-
-json_back.clonar(json_padre)
-
-pprint(json_back.leer()[0])
+for i in objt_list:
+    data.agregar_diccionario(i.json)
+        
+baki.guardar_objetos('objetos',objt_list)
