@@ -2,6 +2,7 @@
 from pprint import pprint
 
 from json_handler import Json, leer
+from data_frame_handler import exportar
 from baki import *
 
 
@@ -31,4 +32,7 @@ def obtener_informacion(ID):
     for i in internal_data:
         if i.json['id'] == ID:
             return i.json
-    
+
+dict_json = [_.json for _ in internal_data]
+pprint(dict_json)
+exportar(dict_json,'prueba.html')
