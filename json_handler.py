@@ -4,16 +4,12 @@ import json
 @dataclass
 class Json:
     ruta: str
-    nombre: str
     
     def __post_init__(self):
-        self.entity = f'{self.ruta}{self.nombre}.json'
+        self.entity = f'{self.ruta}.json'
         with open(self.entity,'w',encoding='utf-8') as archivo:
             json.dump([], archivo, indent=4, ensure_ascii=False)
             
-    def leer(self):
-        with open(self.entity,'r',encoding='utf-8') as inforacion:
-            return json.load(inforacion)
     def agregar_diccionario(self, informacion):
         try:
             
@@ -35,3 +31,7 @@ class Json:
 
         with open(self.entity, 'w', encoding='utf-8') as f:
             json.dump(informacion, f, indent=4, ensure_ascii=False)
+            
+def leer(ruta):
+        with open(f'{ruta}.json','r',encoding='utf-8') as inforacion:
+            return json.load(inforacion)
